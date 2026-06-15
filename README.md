@@ -23,6 +23,8 @@ wget -qO- https://raw.githubusercontent.com/mantraabi/cbt-sekolah/main/install.s
 
 ⚠️ **Segera ganti password setelah login pertama!**
 
+📖 **Tutorial lengkap:** [docs/instalasi.md](docs/instalasi.md)
+
 ## 📋 Fitur
 
 - ✅ Soal Pilihan Ganda, Esai, PG Kompleks, Menjodohkan
