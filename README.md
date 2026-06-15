@@ -112,9 +112,21 @@ server-cbt/
 - Storage: 10GB minimum
 - Port: 5000 (configurable di .env)
 
-## 📞 Support
+## 📞 Hubungi Kami
 
-Dikembangkan oleh [abimantra.my.id](https://abimantra.my.id)
+Ingin menggunakan CBT Sekolah di sekolah Anda? Hubungi kami untuk mendapatkan lisensi:
+
+- **WhatsApp:** [+62 878-2422-3781](https://wa.me/6287824223781)
+- **Website:** [abimantra.my.id](https://abimantra.my.id)
+- **GitHub:** [github.com/mantraabi](https://github.com/mantraabi)
+
+### Paket Lisensi
+
+| Paket | Max Siswa | Durasi | Fitur |
+|-------|-----------|--------|-------|
+| Trial | 50 | 30 hari | PG only |
+| Standard | Sesuai | Fleksibel | Semua fitur |
+| Premium | Unlimited | Fleksibel | Semua fitur + prioritas |
 
 ## 📄 License
 
