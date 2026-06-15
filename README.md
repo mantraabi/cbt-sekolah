@@ -114,9 +114,9 @@ server-cbt/
 
 ## 📞 Hubungi Kami
 
-Ingin menggunakan CBT Sekolah di sekolah Anda? Hubungi kami untuk mendapatkan lisensi:
+Ingin menggunakan CBT Sekolah di sekolah Anda? Hubungi bot Telegram kami untuk mendapatkan lisensi secara otomatis:
 
-- **WhatsApp:** [+62 878-2422-3781](https://wa.me/6287824223781)
+- **Telegram:** [@cbtlisensiBot](https://t.me/cbtlisensiBot) (Otomatis 24/7)
 - **Website:** [abimantra.my.id](https://abimantra.my.id)
 - **GitHub:** [github.com/mantraabi](https://github.com/mantraabi)
 
