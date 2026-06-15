@@ -12,7 +12,7 @@ const {
     exportSoal
 } = require('../controllers/BankSoalController'); 
 const { verifyToken, adminOnly } = require('../middleware/authMiddleware');
-const { requireLicense } = require('../middleware/license');
+const { requireLicense } = require('../middleware/shortLicense');
 const { checkFitur, checkTipeSoal } = require('../middleware/licenseFeatures');
 
 const router = express.Router();

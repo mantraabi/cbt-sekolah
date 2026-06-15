@@ -14,7 +14,7 @@ const {
 const { verifyToken, adminOnly, pengawasOrAdmin } = require('../middleware/authMiddleware');
 const { validate, schemas } = require('../middleware/validation');
 const auditLog = require('../middleware/auditLog');
-const { requireLicense } = require('../middleware/license');
+const { requireLicense } = require('../middleware/shortLicense');
 const { checkFitur } = require('../middleware/licenseFeatures');
 
 const router = express.Router();

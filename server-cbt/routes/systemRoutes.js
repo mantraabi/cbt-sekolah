@@ -2,7 +2,7 @@ const express = require('express');
 const { backupDatabase, restoreDatabase } = require('../controllers/SystemController');
 const { verifyToken, adminOnly } = require('../middleware/authMiddleware');
 const auditLog = require('../middleware/auditLog');
-const { requireLicense } = require('../middleware/license');
+const { requireLicense } = require('../middleware/shortLicense');
 const { checkFitur } = require('../middleware/licenseFeatures');
 
 const router = express.Router();

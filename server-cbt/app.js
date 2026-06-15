@@ -180,7 +180,7 @@ app.use('/api/system', require('./routes/systemRoutes'));
 app.use('/api/license', require('./routes/licenseRoutes'));
 
 // Public: status lisensi (tanpa auth, untuk halaman login & monitoring)
-const { getPublicLicenseStatus } = require('./middleware/license');
+const { getPublicLicenseStatus } = require('./middleware/shortLicense');
 app.get('/api/license/public', getPublicLicenseStatus);
 
 // Serve client (Vue SPA) — catch-all untuk Vue Router history mode
