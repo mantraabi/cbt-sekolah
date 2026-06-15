@@ -183,8 +183,16 @@ app.use('/api/license', require('./routes/licenseRoutes'));
 const { getPublicLicenseStatus } = require('./middleware/license');
 app.get('/api/license/public', getPublicLicenseStatus);
 
+// Serve client (Vue SPA) — catch-all untuk Vue Router history mode
 app.get('/', (req, res) => {
-    res.send('Server CBT Berjalan...');
+    res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+});
+
+// Catch-all: semua non-API route → index.html (Vue Router)
+app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api/')) {
+        res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+    }
 });
 
 // --- 14. ERROR TRACKING ---

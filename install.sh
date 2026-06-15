@@ -161,7 +161,7 @@ EOF
 }
 
 download_app() {
-    step "5/7 Download CBT Sekolah"
+    step "5/8 Download CBT Sekolah"
     
     # Clean previous install
     rm -rf ${INSTALL_DIR}
@@ -178,19 +178,37 @@ download_app() {
     # Extract
     tar -xzf cbt-sekolah.tar.gz
     mv cbt-sekolah-main/server-cbt/* ${INSTALL_DIR}/
+    mv cbt-sekolah-main/client-cbt ${INSTALL_DIR}/client-cbt
     rm -rf cbt-sekolah-main cbt-sekolah.tar.gz
     
     log "File terdownload ke ${INSTALL_DIR}"
 }
 
 setup_app() {
-    step "6/7 Setup Aplikasi"
+    step "6/8 Setup Aplikasi"
     
     cd ${INSTALL_DIR}
     
     # Install dependencies
     npm install --production
-    
+
+    # Build frontend
+    log "Build frontend..."
+    if [ -d "${INSTALL_DIR}/client-cbt" ]; then
+        cd ${INSTALL_DIR}/client-cbt
+        npm install
+        npm run build
+        if [ -d "${INSTALL_DIR}/client-cbt/dist" ]; then
+            rm -rf ${INSTALL_DIR}/public/*
+            cp -r ${INSTALL_DIR}/client-cbt/dist/* ${INSTALL_DIR}/public/
+            log "Frontend built ke public/"
+        else
+            warn "Build gagal, server API-only"
+        fi
+        rm -rf ${INSTALL_DIR}/client-cbt/node_modules
+        cd ${INSTALL_DIR}
+    fi
+
     # Generate JWT secret
     JWT_SECRET=$(openssl rand -hex 32)
     
@@ -260,8 +278,57 @@ EOF
     log "Info install tersimpan di ${INSTALL_DIR}/INSTALL_INFO.txt"
 }
 
+setup_nginx() {
+    step "7/8 Setup Nginx"
+    
+    if ! command -v nginx &> /dev/null; then
+        if [ "$PKG_MGR" = "apt" ]; then
+            apt install -y nginx
+        else
+            yum install -y nginx
+        fi
+    fi
+    
+    SERVER_IP=$(curl -s ifconfig.me 2>/dev/null || hostname -I | awk '{print $1}')
+    
+    cat > /etc/nginx/sites-available/cbt <<NGINX
+server {
+    listen 80;
+    server_name _;
+    location / {
+        root ${INSTALL_DIR}/public;
+        try_files \$uri \$uri/ /index.html;
+    }
+    location /api/ {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    }
+    location /socket.io/ {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+    }
+    location /uploads/ {
+        alias ${INSTALL_DIR}/public/uploads/;
+    }
+}
+NGINX
+    
+    ln -sf /etc/nginx/sites-available/cbt /etc/nginx/sites-enabled/cbt
+    rm -f /etc/nginx/sites-enabled/default
+    nginx -t && systemctl restart nginx && systemctl enable nginx
+    log "Nginx berjalan di port 80"
+}
+
 start_server() {
-    step "7/7 Start Server"
+    step "8/8 Start Server"
     
     cd ${INSTALL_DIR}
     
@@ -304,7 +371,7 @@ print_result() {
     echo -e "${GREEN}║                                                  ║${NC}"
     echo -e "${GREEN}╠══════════════════════════════════════════════════╣${NC}"
     echo -e "${GREEN}║                                                  ║${NC}"
-    echo -e "${GREEN}║   🌐 Akses: http://${SERVER_IP}:5000               ${NC}"
+    echo -e "${GREEN}║   🌐 Akses: http://${SERVER_IP}                     ${NC}"
     echo -e "${GREEN}║                                                  ║${NC}"
     echo -e "${GREEN}║   👤 Admin Login:                                ${NC}"
     echo -e "${GREEN}║      Username: admin                             ${NC}"
@@ -337,5 +404,6 @@ install_mysql
 setup_database
 download_app
 setup_app
+setup_nginx
 start_server
 print_result
