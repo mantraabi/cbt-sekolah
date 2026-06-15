@@ -78,7 +78,7 @@ check_os() {
 # ============================================================
 
 install_system_deps() {
-    step "1/7 Install System Dependencies"
+    step "1/8 Install System Dependencies"
     
     if [ "$PKG_MGR" = "apt" ]; then
         apt update -y
@@ -92,7 +92,7 @@ install_system_deps() {
 }
 
 install_nodejs() {
-    step "2/7 Install Node.js ${NODE_VERSION}"
+    step "2/8 Install Node.js ${NODE_VERSION}"
     
     if command -v node &> /dev/null; then
         CURRENT_NODE=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
@@ -114,7 +114,7 @@ install_nodejs() {
 }
 
 install_mysql() {
-    step "3/7 Install & Setup MySQL"
+    step "3/8 Install & Setup MySQL"
     
     if command -v mysql &> /dev/null; then
         log "MySQL sudah terinstall"
@@ -135,7 +135,7 @@ install_mysql() {
 }
 
 setup_database() {
-    step "4/7 Setup Database"
+    step "4/8 Setup Database"
     
     # Generate random password
     DB_NAME="db_cbt_sekolah"
