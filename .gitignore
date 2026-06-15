@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment & secrets
+.env
+.env.local
+.env.production
+**/.env
+**/.env.local
+
+# License generator (Tuan only — jangan upload!)
+tools/
+
+# License bot (upload terpisah atau jangan upload)
+license-bot/
+
+# Database & backups
+data/
+*.db
+*.db-journal
+backups/
+**/backups/
+
+# Uploads
+uploads/
+**/uploads/
+**/public/uploads/*
+!**/public/uploads/.gitkeep
+
+# Logs
+logs/
+**/logs/
+*.log
+
+# Build artifacts
+dist/
+**/dist/
+build/
+**/build/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp files
+public/temp/
+**/public/temp/
